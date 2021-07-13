@@ -1,4 +1,5 @@
 import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
 import java.io.File
 
@@ -17,7 +18,7 @@ class ControladorCategoria {
                 val diferentes: Boolean = valorActual.nombre !=nombre &&  valorActual.codigo != codigo//expresión Condición
                 return@filter diferentes
             }
-        val gson = Gson()
+        val gson = GsonBuilder().setPrettyPrinting().create()
         val jsonString = gson.toJson(respuestaFilter)
         var file = File("categoria.json")
         file.writeText(jsonString)
@@ -25,7 +26,7 @@ class ControladorCategoria {
     fun crearCategoria(codigo:String,nombre:String,descipcion:String){
         var categorias = listar()
         categorias.add(Categoria(codigo,nombre,descipcion))
-        val gson = Gson()
+        val gson = GsonBuilder().setPrettyPrinting().create()
         val jsonString = gson.toJson(categorias)
         var file = File("categoria.json")
         file.writeText(jsonString)
@@ -42,7 +43,7 @@ class ControladorCategoria {
                     it.descripcion = descipcion
                 }
             }
-        val gson = Gson()
+        val gson = GsonBuilder().setPrettyPrinting().create()
         val jsonString = gson.toJson(categorias)
         var file = File("categoria.json")
         file.writeText(jsonString)
@@ -51,7 +52,7 @@ class ControladorCategoria {
     fun listar():ArrayList<Categoria>{
         val listType = object : TypeToken<List<Categoria>>() { }.type
         var file = File("categoria.json")
-        val gson = Gson()
+        val gson = GsonBuilder().setPrettyPrinting().create()
         val list :ArrayList<Categoria> = gson.fromJson(file.readText(), listType)
         return list
     }
