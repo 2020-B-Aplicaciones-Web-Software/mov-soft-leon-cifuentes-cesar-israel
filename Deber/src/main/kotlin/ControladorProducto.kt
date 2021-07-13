@@ -1,6 +1,8 @@
 import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
 import java.io.File
+
 
 class ControladorProducto {
     fun abrirVista(){
@@ -24,7 +26,7 @@ class ControladorProducto {
                     it.arregloProducto.removeAt(indiceE)
                 }
             }
-        val gson = Gson()
+        val gson = GsonBuilder().setPrettyPrinting().create()
         val jsonString = gson.toJson(categorias)
         var file = File("categoria.json")
         file.writeText(jsonString)
@@ -40,7 +42,7 @@ class ControladorProducto {
                     it.arregloProducto.add(Producto(nombre, precio.toDouble(),cantidad.toInt(),descripcion))
                 }
             }
-        val gson = Gson()
+        val gson = GsonBuilder().setPrettyPrinting().create()
         val jsonString = gson.toJson(categorias)
         var file = File("categoria.json")
         file.writeText(jsonString)
@@ -61,7 +63,7 @@ class ControladorProducto {
                     }
                 }
             }
-        val gson = Gson()
+        val gson = GsonBuilder().setPrettyPrinting().create()
         val jsonString = gson.toJson(categorias)
         var file = File("categoria.json")
         file.writeText(jsonString)
@@ -69,7 +71,7 @@ class ControladorProducto {
     fun listar(nombreCategoria:String):ArrayList<Producto>{
         val listType = object : TypeToken<List<Categoria>>() { }.type
         var file = File("categoria.json")
-        val gson = Gson()
+        val gson = GsonBuilder().setPrettyPrinting().create()
         val list :ArrayList<Categoria> = gson.fromJson(file.readText(), listType)
 
         var productos:List<Categoria> = arrayListOf()

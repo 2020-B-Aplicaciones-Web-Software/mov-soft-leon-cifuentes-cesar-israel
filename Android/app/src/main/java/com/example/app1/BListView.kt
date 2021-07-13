@@ -10,6 +10,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.ListView
+import androidx.appcompat.app.AlertDialog
 
 class BListView : AppCompatActivity() {
     var posicionItemSeleccionado = 0
@@ -29,15 +30,45 @@ class BListView : AppCompatActivity() {
 
         val botonListView = findViewById<Button>(R.id.btn_list_view_anadir)
         botonListView.setOnClickListener{anadirItemsAlListView(
-            BEntrenador("Maria","c@c.com"),
+            BEntrenador("Maria","c@c.com", null),
             arregloNumeros,adaptador)}
 
-        /*listViewEjemplo
+        listViewEjemplo
             .setOnItemLongClickListener{
-            adapterView,view, posicion,id->Log.i("list-view","Dio click ${posicion}")
-            return@setOnItemLongClickListener true
-        }*/
-        registerForContextMenu(listViewEjemplo)
+                adapterView,view, posicion,id->Log.i("list-view","Dio click ${posicion}")
+                val builder = AlertDialog.Builder(this)
+                builder.setTitle("Title")
+                //builder.setMessage("Mensaje")
+
+                val seleccionUsuario = booleanArrayOf(
+                    true,
+                    false,
+                    true
+                )
+                val opciones = resources.getStringArray(R.array.string_array_opciones_dialogo)
+
+                builder.setMultiChoiceItems(
+                    opciones,
+                    seleccionUsuario,
+                    { dialog,which, isCheked ->
+                        Log.i("list-view","${which}  ${isCheked}")
+                    }
+                )
+                builder.setPositiveButton(
+                    "Si",
+                    {dialog, which ->
+                        Log.i("list-view","Si")
+                    }
+                )
+                builder.setNegativeButton(
+                    "No",
+                    null
+                )
+                val dialogo = builder.create()
+                dialogo.show()
+                return@setOnItemLongClickListener true
+        }
+     //   registerForContextMenu(listViewEjemplo)
     }
 
     fun anadirItemsAlListView(
